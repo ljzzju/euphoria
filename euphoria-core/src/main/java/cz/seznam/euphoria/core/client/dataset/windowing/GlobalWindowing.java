@@ -15,6 +15,7 @@
  */
 package cz.seznam.euphoria.core.client.dataset.windowing;
 
+import cz.seznam.euphoria.core.client.functional.ResultType;
 import cz.seznam.euphoria.core.client.triggers.NoopTrigger;
 import cz.seznam.euphoria.core.client.triggers.Trigger;
 
@@ -62,6 +63,9 @@ public final class GlobalWindowing<T>
   private final static Iterable<Window> INSTANCE_ITER =
       Collections.singleton(Window.INSTANCE);
 
+  private static final ResultType<GlobalWindowing.Window> WINDOW_TYPE
+      = new ResultType<GlobalWindowing.Window>() {};
+
   private GlobalWindowing() {}
 
   @Override
@@ -72,6 +76,11 @@ public final class GlobalWindowing<T>
   @Override
   public Trigger<Window> getTrigger() {
     return NoopTrigger.get();
+  }
+
+  @Override
+  public ResultType<GlobalWindowing.Window> getWindowType() {
+    return WINDOW_TYPE;
   }
 
   @SuppressWarnings("unchecked")
