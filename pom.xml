@@ -81,6 +81,7 @@
   </developers>
 
   <modules>
+    <module>euphoria-beam</module>
     <module>euphoria-core</module>
     <module>euphoria-fluent</module>
     <module>euphoria-inmem</module>
