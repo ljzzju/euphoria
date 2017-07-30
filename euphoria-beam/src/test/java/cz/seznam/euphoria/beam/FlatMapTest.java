@@ -28,8 +28,6 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -49,7 +47,7 @@ public class FlatMapTest {
   }
 
   @Test
-  public void testSimpleMap() throws ExecutionException, InterruptedException, TimeoutException {
+  public void testSimpleMap() throws ExecutionException, InterruptedException {
 
     final Flow flow = Flow.create();
 
@@ -64,7 +62,7 @@ public class FlatMapTest {
         .output()
         .persist(output);
 
-    executor.submit(flow).get(5000, TimeUnit.MILLISECONDS);
+    executor.submit(flow).get();
 
     assertEquals(Arrays.asList(2, 3, 4), output.getOutput(0));
     assertEquals(Arrays.asList(3, 4, 5), output.getOutput(1));
