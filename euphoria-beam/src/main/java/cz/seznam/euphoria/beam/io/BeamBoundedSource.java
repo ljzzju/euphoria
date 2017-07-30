@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Seznam.cz, a.s.
+ * Copyright 2016-2017 Seznam.cz, a.s.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,15 @@ package cz.seznam.euphoria.beam.io;
 
 import cz.seznam.euphoria.core.client.io.DataSource;
 import cz.seznam.euphoria.core.client.io.Partition;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Objects;
 import org.apache.beam.sdk.coders.Coder;
 import org.apache.beam.sdk.io.BoundedSource;
 import org.apache.beam.sdk.options.PipelineOptions;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * A {@code BoundedSource} created from {@code DataSource}.
@@ -36,8 +37,14 @@ public class BeamBoundedSource<T> extends BoundedSource<T> {
     return new BeamBoundedSource<>(wrap, partitionId);
   }
 
-  final DataSource<T> wrap;
-  final int partitionId;
+  private final DataSource<T> wrap;
+
+  @Override
+  protected void finalize() throws Throwable {
+    super.finalize();
+  }
+
+  private final int partitionId;
 
   private BeamBoundedSource(DataSource<T> wrap, int partitionId) {
     this.wrap = Objects.requireNonNull(wrap);
@@ -49,7 +56,7 @@ public class BeamBoundedSource<T> extends BoundedSource<T> {
       throws Exception {
 
     // the split is defined by the source itself
-    return Arrays.asList(this);
+    return Collections.singletonList(this);
   }
 
   @Override
@@ -101,5 +108,4 @@ public class BeamBoundedSource<T> extends BoundedSource<T> {
   public Coder<T> getDefaultOutputCoder() {
     return new KryoCoder<>();
   }
-
 }

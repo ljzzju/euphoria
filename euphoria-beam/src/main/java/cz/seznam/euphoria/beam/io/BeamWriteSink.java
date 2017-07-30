@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Seznam.cz, a.s.
+ * Copyright 2016-2017 Seznam.cz, a.s.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,8 +41,8 @@ public class BeamWriteSink<T> extends PTransform<PCollectionList<T>, PDone> {
 
   private static final class WriteFn<T> extends DoFn<T, Void> {
 
-    final DataSink<T> sink;
-    final int partitionId;
+    private final DataSink<T> sink;
+    private final int partitionId;
     Writer<T> writer = null;
 
     WriteFn(int partitionId, DataSink<T> sink) {
@@ -57,7 +57,7 @@ public class BeamWriteSink<T> extends PTransform<PCollectionList<T>, PDone> {
 
     @StartBundle
     public void startBundle(StartBundleContext c) throws IOException {
-
+      // ~ ignore
     }
 
     @ProcessElement
@@ -82,7 +82,7 @@ public class BeamWriteSink<T> extends PTransform<PCollectionList<T>, PDone> {
   private final Pipeline pipeline;
   private final DataSink<T> sink;
 
-  BeamWriteSink(Pipeline pipeline, DataSink<T> sink) {
+  private BeamWriteSink(Pipeline pipeline, DataSink<T> sink) {
     this.pipeline = Objects.requireNonNull(pipeline);
     this.sink = Objects.requireNonNull(sink);
   }

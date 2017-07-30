@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Seznam.cz, a.s.
+ * Copyright 2016-2017 Seznam.cz, a.s.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import java.util.List;
 public class ListCollector<T> implements Collector<T>, Context {
 
   private Object window = GlobalWindowing.Window.get();
-  private List<T> elements = new ArrayList<T>();
+  private List<T> elements = new ArrayList<>();
 
   @Override
   public void collect(T elem) {
@@ -41,7 +41,7 @@ public class ListCollector<T> implements Collector<T>, Context {
 
   @Override
   public Context asContext() {
-    return (Context) this;
+    return this;
   }
 
   @Override
@@ -71,5 +71,4 @@ public class ListCollector<T> implements Collector<T>, Context {
   public void clear() {
     elements.clear();
   }
-
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Seznam.cz, a.s.
+ * Copyright 2016-2017 Seznam.cz, a.s.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ public class KryoCoder<T> extends Coder<T> {
 
   @Override
   public void encode(T t, OutputStream out) throws IOException {
-    Output output = new Output(out);
+    final Output output = new Output(out);
     output.writeInt((int) (Object) t);
     output.flush();
   }
@@ -43,7 +43,7 @@ public class KryoCoder<T> extends Coder<T> {
   @Override
   @SuppressWarnings("unchecked")
   public T decode(InputStream in) throws IOException {
-    Input input = new Input(in);
+    final Input input = new Input(in);
     return (T) (Object) input.readInt();
   }
 
